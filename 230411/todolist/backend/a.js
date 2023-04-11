@@ -13,7 +13,9 @@ const onlyFruits = foods.filter((v, i) => {
 });
 
 const mapFruits = foods.map((v, i) => {
-  return v.type === "fruit";
+  if (v.type === "fruit") {
+    return v;
+  }
 });
 
 console.log(onlyFruits);
