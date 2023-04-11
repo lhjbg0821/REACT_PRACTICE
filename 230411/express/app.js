@@ -1,38 +1,19 @@
 // 리액트 기준 import기능 (Common JS)
 const express = require("express");
+const userRouter = require("./routes/user");
+const tweetRouter = require("./routes/tweet");
 
 const app = express();
 
 const port = 3010;
 
-app.get("/", (req, res) => {
-  res.send("Hello, Express!");
-});
+app.use("/user", userRouter);
+app.use("/tweet", tweetRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello, Express!");
-});
-
-app.get("/", (req, res) => {
-  res.send("Hello, Express!");
-});
-
-app.get("/", (req, res) => {
-  res.send("Hello, Express!");
-});
-
-app.post("/", (req, res) => {
-  res.send("Post");
-});
-
-app.put("/", (req, res) => {
-  res.send("Put");
-});
-
-app.delete("/", (req, res) => {
-  res.send("Delete");
 });
 
 app.listen(port, () => {
-  console.log(`Server listening on port: ${port}🚀`);
+  console.log(`Server listening on port: ${port}🚀🚀🚀`);
 });
