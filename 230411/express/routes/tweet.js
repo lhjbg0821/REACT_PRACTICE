@@ -12,14 +12,14 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/create", (req, res) => {
-  res.send("게시물 생성");
+  res.send("트윗 생성");
 });
 
 router.put("/update", (req, res) => {
-  res.send("게시물 수정");
+  res.send("트윗 수정");
 });
 
 router.delete("/delete", (req, res) => {
-  res.send("게시물 삭제");
+  res.send("트윗 삭제");
 });
 module.exports = router;
