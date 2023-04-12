@@ -4,19 +4,21 @@ let todoData = require("../todoData.json");
 
 const router = express.Router();
 
-// 전체 todoList 조회
+//  전체 투두리스트 조회
 router.get("/", (req, res) => {
   console.log(todoData);
 
   res.json(todoData);
 });
 
+// 특정 투두리스트 조회
 router.get("/:id", (req, res) => {
-  const { id } = req.params; // /:id => 파라미터 => params에 들어있음
+  const { id } = req.params;
 
   if (parseInt(id) >= todoData.length) {
-    res.json({ error: "존재하지 않는 ID입니다." });
+    return res.status(400).json({ error: "존재하지 않는 ID입니다." });
   }
+
   res.json(todoData[parseInt(id)]);
 });
 
