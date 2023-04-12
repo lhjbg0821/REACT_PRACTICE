@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-const CreateToDo = () => {
+const CreateToDo = ({ getToDoList }) => {
   const [title, setTitle] = useState("");
 
   const onSubmitCreateToDo = async (e) => {
@@ -21,7 +21,13 @@ const CreateToDo = () => {
         }
       );
 
-      console.log(response);
+      if (response.status !== 200) {
+        alert("요청을 불러오지 못했습니다.");
+        return;
+      }
+
+      getToDoList();
+      setTitle("");
     } catch (error) {
       console.error(error);
     }

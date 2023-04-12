@@ -38,11 +38,19 @@ function App() {
           나무 베는데 한 시간이 주어진다면, 도끼를 가는데 45분을 쓰겠다,
           에비브러햄 링컨
         </div>
-        <CreateToDo />
+        <CreateToDo getToDoList={getToDoList} />
         <ul className="mt-16 flex flex-col w-1/2">
           {toDoList &&
             toDoList.map((v, i) => {
-              return <TodoCard key={i} title={v.title} />;
+              return (
+                <TodoCard
+                  key={i}
+                  title={v.title}
+                  isDone={v.isDone}
+                  index={i}
+                  getToDoList={getToDoList}
+                />
+              );
             })}
         </ul>
       </div>
