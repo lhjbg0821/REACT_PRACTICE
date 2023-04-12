@@ -1,7 +1,22 @@
 import axios from "axios";
 import TodoCard from "./components/TodoCard";
+import { useEffect } from "react";
 
 function App() {
+  const getToDoList = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/todo`
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getToDoList();
+  }, []);
+
   return (
     <div className=" min-h-screen flex flex-col justify-start items-center pt-16">
       <h1 className="text-4xl font-bold">AWESOME TO DO LIST✅</h1>
