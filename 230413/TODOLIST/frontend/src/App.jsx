@@ -7,15 +7,17 @@ import CreateTodo from "./components/CreateTodo";
 function App() {
   const [user, setUser] = useState();
   const [todos, setTodos] = useState();
+  const [skip, setSkip] = useState(0);
 
   const getTodos = async () => {
     try {
       if (!user) return;
 
       const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/todo/${user.id}`
+        `${process.env.REACT_APP_BACKEND_URL}/todo/${user.id}?skip=${skip}}`
       );
       setTodos(response.data.todos);
+      setSkip(skip + 3);
     } catch (error) {
       console.error(error);
       alert("todolist를 불리오지 못했습니다.");
@@ -26,15 +28,29 @@ function App() {
     setUser(undefined);
   };
 
-  useEffect(() => {
-    getTodos();
-  }, [todos]);
+  const onClickReload = async () => {
+    try {
+      if (!user) return;
+
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/todo/${user.id}?skip=${skip}`
+      );
+      setTodos([...todos, ...response.data.todos]);
+      setSkip(skip + 3);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     // todolist 가져오기
     getTodos();
     console.log(user);
   }, [user]);
+
+  useEffect(() => {
+    console.log(todos);
+  }, [todos]);
 
   if (!user) {
     return <LogIn setUser={setUser} />;
@@ -61,10 +77,28 @@ function App() {
         </div>
         <CreateTodo userId={user.id} todos={todos} setTodos={setTodos} />
       </div>
+      <div className="mt-16">
+        <button
+          className="ml-4 px-4 py-2 w-24 h-24  bg-pink-200 hover:bg-pink-400 rounded-full text-gray-50 text-2xl"
+          onClick={onClickReload}
+        >
+          갱 신
+        </button>
+      </div>
       <div className="mt-16 flex flex-col w-1/2">
         {todos &&
           todos.map((v, i) => {
-            return <TodoCard key={i} todo={v.todo} isDone={v.isDone} />;
+            return (
+              <TodoCard
+                key={i}
+                todo={v.todo}
+                isDone={v.isDone}
+                id={v.id}
+                userId={user.id}
+                todos={todos}
+                setTodos={setTodos}
+              />
+            );
           })}
       </div>
     </div>
