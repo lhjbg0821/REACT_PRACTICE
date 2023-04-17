@@ -9,6 +9,8 @@ const client = new PrismaClient();
 router.post("/", async (req, res) => {
   try {
     const { account } = req.body;
+    // insomnia 에 요청을 보낼때
+    // insomnia body 내용!
 
     const existUser = await client.user.findUnique({
       where: {
@@ -49,6 +51,11 @@ router.get("/:account", async (req, res) => {
         error: "Not exist user.",
       });
     }
+
+    res.json({
+      ok: true,
+      user,
+    });
   } catch (error) {
     console.error(error);
   }
